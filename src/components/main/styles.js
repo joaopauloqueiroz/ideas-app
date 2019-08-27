@@ -28,14 +28,20 @@ export const GridItem = styled.View `
     width: 100%;
     background-color: #fff;
     border-radius: 4px;
-    margin-top: 10px;
-    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    padding: 5px;
     flex-direction: row;
 `
 export const ViewIcon = styled.View`
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: row;  
+`;
+export const ViewItems = styled.View`
     width: 20%;
     justify-content: flex-end;
-    flex-direction: row;
+    flex-direction: column;
 `;
 
 export const Button = styled.TouchableOpacity `
@@ -66,3 +72,16 @@ export const Input = styled.TextInput `
     min-width: 250px;
     margin-top: 10px;
 `;
+
+export const Scroll = styled.ScrollView `
+     padding: 8px;
+     margin-bottom: 10px;
+     height: auto;
+`
+export const DateItem = styled.Text `
+    font-size: 10px;
+    color: #000;
+    padding-right: 4px;
+    text-align: right;
+    font-family: 'Roboto, sans-serif';
+`

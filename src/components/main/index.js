@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment'
 // import { View } from 'react-native';
 import Item from './item'
-import { Container, Text, GridItem, Button, ViewIcon, Description, TextButton, Input } from './styles';
+import { Container, Scroll, Text, GridItem, Button, ViewIcon, Description, TextButton, Input } from './styles';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
 export default function main() {
   const [item, setItem] = useState('')
   const [field, setField] = useState([])
 
   useEffect(() => {
-
+    field
   }, [field])
 
     function add(){
         if(item !== ""){
             let form = {
                 text: item,
-                emotion: true
+                emotion: true,
+                date: moment(new Date()).format('DD-MM-YYYY')
             }
             setField([...field, form])
             setItem('') 
@@ -25,37 +28,45 @@ export default function main() {
 
     function remove(i){
         field.splice(i, 1)
-        setField([...field])
+        setField([...field]) 
     }
     
     function mood(i) {
-        field[i].emotion = !field[i].emotion;
-      setField(field)
+      let a = field
+        a[i].emotion = !a[i].emotion;
+      setField([...a])
     }
+
   return (
     <Container>
-        <Text>Suas Tarefas</Text>
+        <Text>Your Moments</Text>
+      <Scroll>
             {
                 field.map(( item, i ) => {
                     return <Item 
                               item={item.text} 
+                              icon={item.emotion}
+                              date={item.date}
                               key={i}
                               i={i}
+                              all={item}
                               mood={() => mood(i)} 
-                              icon={item.emotion}
                               remove={() => remove(i)}
                             />
                 })
             }
+
+          </Scroll>
         <Input 
-            placeholder="Descreva seu lembrete"
+            placeholder="Description of moments"
             value={item}
             onChangeText={setItem}
         />
 
         <Button onPress={add}>
-            <TextButton>Adicionar</TextButton>
+            <TextButton>ADD</TextButton>
         </Button>
+        
     </Container>
   );
 }
