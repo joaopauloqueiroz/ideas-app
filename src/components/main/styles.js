@@ -34,9 +34,10 @@ export const GridItem = styled.View `
     flex-direction: row;
 `
 export const ViewIcon = styled.View`
-    justify-content: flex-end;
-    align-items: flex-end;
-    flex-direction: row;  
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin: 2px;
 `;
 export const ViewItems = styled.View`
     width: 20%;

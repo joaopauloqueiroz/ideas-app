@@ -15,8 +15,8 @@ const Routes = createAppContainer(
             }
         } }
     }, {
-        transitionConfig: NavigationConfig,
         initialRouteName: 'Login',
+        transitionConfig: NavigationConfig,
     })
 )
 
