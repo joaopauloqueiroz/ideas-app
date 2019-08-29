@@ -50,3 +50,16 @@ export const Logo = styled.Text `
     font-family: 'din-condensed, sans-serif';
     
 `
+export const Error = styled.Text `
+    min-width: 250px;
+    margin-top: 10px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 5px;
+    margin-bottom: 2px;
+    text-align: center;
+    font-size: 10px;
+`

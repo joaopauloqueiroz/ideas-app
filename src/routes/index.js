@@ -1,63 +1,23 @@
-import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation'
-import { fromLeft, zoomIn, zoomOut } from 'react-navigation-transitions';
-import Login from '../components/login'
-import Main from '../components/main'
+import React , { useState, useEffect } from 'react'
+import { createRootNavigator } from './auth'
+import AsyncStorage from '@react-native-community/async-storage';
 
-const Routes = createAppContainer(
-    createStackNavigator({
-        Login: { screen: Login, navigationOptions: { header: null} },
-        Main: { screen: Main, navigationOptions: { 
-            headerStyle: {
-                backgroundColor: '#ddd',
-                elevation: 0,
-                shadowOpacity: 0,
-                borderBottomWidth: 0,
-            }
-        } }
-    }, {
-        initialRouteName: 'Login',
-        transitionConfig: NavigationConfig,
-    })
-)
+function Routes() {
+    const [auth, setAuth] = useState(false)
+    useEffect(() => {
+        authenticate()
+    }, [])
 
-const BottomTransition = (index, position, height) => {
-    const sceneRange = [index - 1, index];
-    const outputHeight = [height, 0];
-    const transition = position.interpolate({
-        inputRange: sceneRange,
-        outputRange: outputHeight
-    });
-
-    return {
-        transform: [{translateY: transition}]
-    }
-}
-
-const FadeTransition = (index, position) => { 
-    const sceneRange = [index - 2, index];
-    const outputOpacity = [0, 2];
-    const transition = position.interpolate({
-        inputRange: sceneRange,
-        outputRange: outputOpacity
-    });
-
-    return {
-        opacity: transition
-    }
-}
-
-const NavigationConfig = () => {
-    return {
-        screenInterpolator: (sceneProps) => {
-            const position = sceneProps.position;
-            const scene = sceneProps.scene;
-            const index = scene.index;
-            const height = sceneProps.layout.initHeight;
-
-            // return BottomTransition(index, position, height);
-            return FadeTransition(index, position)
+    async function authenticate(){
+        let auth = await AsyncStorage.getItem('@ideas:_id')
+        if(auth){
+            setAuth(true)
+        }else{
+            setAuth(false)
         }
     }
- }
+    let Layout = createRootNavigator(auth);
+    return ( Layout ? <Layout /> : null)
+}
  
 export default Routes

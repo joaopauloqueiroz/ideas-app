@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment'
+import AsyncStorage from '@react-native-community/async-storage';
 import { FlatList } from 'react-native';
 import Item from './item'
 import { Container, Scroll, Text, GridItem, Button, ViewIcon, Description, TextButton, Input } from './styles';
 import api from '../../services/api'
 
-export default function main() {
+export default function main({ navigation }) {
   const [item, setItem] = useState('')
   const [field, setField] = useState('')
 
@@ -17,10 +18,10 @@ export default function main() {
    * Function load init ideas
    */
   async function init() {
-    let id = '5d65575c383f336a674b128b'
+  const id = await AsyncStorage.getItem('@ideas:_id')
     try {
       const response = await api.get('/get-all/'+id)
-      setField(response.data)
+        setField(response.data)
     } catch (error) {
       console.log(error)
     }
@@ -39,11 +40,11 @@ export default function main() {
             }
             try {
               const response = await api.post('/ideas/create', form)
+                setField([...field, form])
+                setItem('')
             } catch (error) {
               console.log(error)
             }
-            setField([...field, form])
-            setItem('') 
         }
         
   }
@@ -94,7 +95,6 @@ export default function main() {
             value={item}
             onChangeText={setItem}
         />
-
         <Button onPress={add}>
             <TextButton>ADD</TextButton>
         </Button>

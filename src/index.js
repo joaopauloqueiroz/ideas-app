@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import Routes from './routes'
+import Routes  from './routes'
 
-export default function src() {
+export default function index() {
+
   return (
    <Routes />
   );
