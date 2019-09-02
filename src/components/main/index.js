@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment'
 import AsyncStorage from '@react-native-community/async-storage';
-import { FlatList } from 'react-native';
+import { FlatList, Text } from 'react-native';
 import Item from './item'
-import { Container, Scroll, Text, GridItem, Button, ViewIcon, Description, TextButton, Input } from './styles';
+import { Container, Scroll, GridItem, Button, ViewIcon, Description, TextButton, Input } from './styles';
 import api from '../../services/api'
 
 export default function main({ navigation }) {
   const [item, setItem] = useState('')
-  const [field, setField] = useState('')
+  const [field, setField] = useState([])
+  const [id, setiId] = useState('')
 
   useEffect(() => {
     init()
@@ -19,13 +20,15 @@ export default function main({ navigation }) {
    */
   async function init() {
   const id = await AsyncStorage.getItem('@ideas:_id')
+  setiId(id)
     try {
       const response = await api.get('/get-all/'+id)
         setField(response.data)
     } catch (error) {
       console.log(error)
     }
-} 
+}
+
 
 /**
  * Functiona add new idea
@@ -36,11 +39,12 @@ export default function main({ navigation }) {
                 text: item,
                 emotion: true,
                 date: new Date(),
-                user: '5d65575c383f336a674b128b'
+                user: id
             }
             try {
               const response = await api.post('/ideas/create', form)
-                setField([...field, form])
+
+                setField([...field, response.data])
                 setItem('')
             } catch (error) {
               console.log(error)
@@ -49,14 +53,23 @@ export default function main({ navigation }) {
         
   }
 
+  async function update(form){
+   try {
+     const response = await api.put('/ideas/update', form)
+   } catch (error) {
+     console.log(error)
+   }
+    
+  }
+
   /**
    * Funtion to delete idea
    * @param {int} i 
    * @param {ObjectId} _id 
    */
-  async function remove(i, _id){
+  async function remove(i){
    try {
-     const response = await api.delete('/delete/'+_id)
+     const response = await api.delete('/delete/'+field[i]._id)
      field.splice(i, 1)
      setField([...field]) 
    } catch (error) {
@@ -72,14 +85,20 @@ export default function main({ navigation }) {
   async function mood(i, motion) {
     field[i].emotion = motion;
     setField([...field])
+    await update(field[i])
   }
 
+  async function exit(){
+    await AsyncStorage.clear()
+    navigation.navigate('Login')
+    setField([])
+  }
   return (
     <Container>
-        <Text>Your Moments</Text>
+        <Text onPress={exit}>Sair</Text>
         <FlatList 
           data={field}
-          keyExtractor={item => String(item.text)}
+          keyExtractor={item => String(item._id)}
           renderItem={( {item, index } ) => {
           return <Item 
             key={index}

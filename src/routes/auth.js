@@ -1,23 +1,72 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Login from '../components/login';
+import Register from '../components/login/register'
 import Logged from '../components/main';
-
+import { Text } from './styles'
 export const SignedOutRoutes = createStackNavigator({
   Login: {
     screen: Login,
     navigationOptions: {
-      title: "Entrar"
+      title: "Login",
+      headerTitleStyle: {
+        fontSize: 18,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          fontWeight: 'bold',
+          fontFamily: 'Roboto, sans-serif',
+          fontStyle: 'italic',
+          color: '#DF4723',
+          letterSpacing: 3,
+          fontWeight: 'bold',
+          fontSize: 30,
+          fontFamily: 'din-condensed, sans-serif',
+      },
     }
   },
+
+  Register: {
+    screen: Register,
+    navigationOptions: {
+      title: "Register",
+      headerTitleStyle: {
+        fontSize: 18,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          fontWeight: 'bold',
+          fontFamily: 'Roboto, sans-serif',
+          fontStyle: 'italic',
+          color: '#DF4723',
+          letterSpacing: 3,
+          fontWeight: 'bold',
+          fontSize: 30,
+          fontFamily: 'din-condensed, sans-serif',
+      },
+    }
+  }
 });
 
 export const SignedInRoutes = createStackNavigator({
   Logged: {
     screen: Logged,
     navigationOptions: {
-      title: "Meu perfil"
-    }
+      title: "IDEAS",
+      headerStyle: {
+      },
+      headerTitleStyle: {
+        fontSize: 18,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        fontWeight: 'bold',
+        fontFamily: 'Roboto, sans-serif',
+        fontStyle: 'italic',
+        color: '#DF4723',
+        letterSpacing: 3,
+        fontWeight: 'bold',
+        fontSize: 30,
+        fontFamily: 'din-condensed, sans-serif',
+        }
+    },
   },
 });
 
@@ -31,9 +80,9 @@ export const createRootNavigator = (signedIn = false) => {
         headerMode: "none",
         mode: "modal",
         initialRouteName: signedIn ? "SignedIn" : "SignedOut",
-        navigationOptions: {
-          gesturesEnabled: false
-        }
+        // navigationOptions: {
+        //   gesturesEnabled: false
+        // }
       })
     )
 }

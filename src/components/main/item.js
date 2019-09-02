@@ -9,7 +9,12 @@ export default function Item({ item, remove, mood, mod }) {
     }, [item])
 
   return (
-    <GridItem>
+    <GridItem style={{
+        shadowOpacity: 0.75,
+        shadowRadius: 5,
+        shadowColor: 'red',
+        shadowOffset: { height: 0, width: 0 },
+    }}>
         <Description>{item.text}</Description>
         <ViewItems>
             <ViewIcon>
@@ -30,7 +35,7 @@ export default function Item({ item, remove, mood, mod }) {
                     />
             </ViewIcon>
             <DateItem>
-                {moment(item.date).format('DD/MM/YYYY')}
+                {moment(item.date).format('DD/MM/YYYY HH:mm')}
             </DateItem>
         </ViewItems>
     </GridItem>

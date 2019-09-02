@@ -63,3 +63,10 @@ export const Error = styled.Text `
     text-align: center;
     font-size: 10px;
 `
+
+export const Text = styled.Text `
+    font-size: 12;
+    font-family: 'Roboto, sans-serif';
+    color: #DF4723;
+    margin-top: 5;
+`

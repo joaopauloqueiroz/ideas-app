@@ -21,7 +21,7 @@ export const Description = styled.Text `
     font-size: 12px;
     color: #000;
     font-family: 'Roboto, sans-serif';
-    width: 80%;
+    width: 70%;
 `
 
 export const GridItem = styled.View `
@@ -32,15 +32,15 @@ export const GridItem = styled.View `
     margin-bottom: 8px;
     padding: 5px;
     flex-direction: row;
-`
+`;
 export const ViewIcon = styled.View`
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
+    padding-left: 5px;
+    align-items: flex-end;
     flex-direction: row;
-    margin: 2px;
 `;
 export const ViewItems = styled.View`
-    width: 20%;
+    width: 30%;
     justify-content: flex-end;
     flex-direction: column;
 `;
@@ -85,4 +85,5 @@ export const DateItem = styled.Text `
     padding-right: 4px;
     text-align: right;
     font-family: 'Roboto, sans-serif';
+    
 `

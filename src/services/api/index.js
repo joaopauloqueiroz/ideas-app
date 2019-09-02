@@ -3,7 +3,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3500/'
+  baseURL: 'https://backend-app-ideas.herokuapp.com/'
 });
 
 api.interceptors.request.use(async config => {

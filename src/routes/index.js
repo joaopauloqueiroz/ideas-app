@@ -1,23 +1,40 @@
-import React , { useState, useEffect } from 'react'
-import { createRootNavigator } from './auth'
+import React from 'react';
+import { View, Text } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-function Routes() {
-    const [auth, setAuth] = useState(false)
-    useEffect(() => {
-        authenticate()
-    }, [])
+import { createRootNavigator } from './auth';
+import Loader from '../components/preloader'
+export default class App extends React.Component {
+  constructor(props) {
+      super(props)
+      this.state = {
+        signed: false,
+        signLoaded: false,
+        control: false,
+      }
+      this.authemticate()
+  }
 
-    async function authenticate(){
-        let auth = await AsyncStorage.getItem('@ideas:_id')
-        if(auth){
-            setAuth(true)
-        }else{
-            setAuth(false)
-        }
+  async authemticate() {
+    let auth = await AsyncStorage.getItem('@ideas:_id')
+    if(auth){
+        this.setState({
+            signed: true, 
+            signLoaded: true,
+            control: true
+        })
+    }else{
+        this.setState({
+            signed: false, 
+            signLoaded: false,
+            control: true
+        })
     }
-    let Layout = createRootNavigator(auth);
-    return ( Layout ? <Layout /> : null)
+  }
+
+  render() {
+    const { signed, control } = this.state;
+    const Layout = createRootNavigator(signed);
+    return control ? <Layout /> : <Loader />;
+  }
 }
- 
-export default Routes
