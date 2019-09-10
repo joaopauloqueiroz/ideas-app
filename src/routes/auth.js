@@ -1,9 +1,12 @@
-import {createStackNavigator, createAppContainer} from 'react-navigation';
+import {
+  createStackNavigator,
+  createAppContainer,
+  createSwitchNavigator,
+} from 'react-navigation';
 
 import Login from '../components/login';
 import Register from '../components/login/register';
 import Logged from '../components/main';
-import {Text} from './styles';
 export const SignedOutRoutes = createStackNavigator({
   Login: {
     screen: Login,
@@ -31,7 +34,7 @@ export const SignedInRoutes = createStackNavigator({
 
 export const createRootNavigator = (signedIn = false) => {
   return createAppContainer(
-    createStackNavigator(
+    createSwitchNavigator(
       {
         SignedIn: {screen: SignedInRoutes},
         SignedOut: {screen: SignedOutRoutes},

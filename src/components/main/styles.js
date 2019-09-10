@@ -26,8 +26,8 @@ export const Description = styled.Text`
 `;
 
 export const GridItem = styled.View`
-  width: 94%;
-  margin: 2%;
+  width: 98%;
+  margin: 1%;
   background-color: #fff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
