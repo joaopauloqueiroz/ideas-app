@@ -22,7 +22,9 @@ import api from '../../services/api';
 export default function main({navigation}) {
   const [item, setItem] = useState('');
   const [field, setField] = useState([]);
-  const [id, setiId] = useState('');
+  const [id, setId] = useState('');
+  const [focus, setFocus] = useState(false);
+  const [edit, setEdit] = useState(false);
   const [preloader, setPreloader] = useState(true);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export default function main({navigation}) {
    */
   async function init() {
     const id = await AsyncStorage.getItem('@ideas:_id');
-    setiId(id);
+    setId(id);
     try {
       const response = await api.get('/get-all/' + id);
       setField(response.data);
@@ -48,6 +50,16 @@ export default function main({navigation}) {
    * Functiona add new idea
    */
   async function add() {
+    if (id) {
+      let form = field[edit];
+      form.text = item;
+      await update(form);
+      setItem('');
+      setEdit(false);
+      setFocus(false);
+      setField([...field, form]);
+      return false;
+    }
     if (item !== '') {
       let form = {
         text: item,
@@ -106,6 +118,14 @@ export default function main({navigation}) {
     navigation.navigate('Login');
     setField([]);
   }
+
+  async function editable(index, id) {
+    setFocus(true);
+    setEdit(index);
+    setItem(field[index].text);
+    setId(id);
+  }
+
   return (
     <Container>
       <View>
@@ -138,6 +158,7 @@ export default function main({navigation}) {
                 <Item
                   key={index}
                   item={item}
+                  editable={() => editable(index, item._id)}
                   remove={() => remove(index, item._id)}
                   mood={() => mood(index, true)}
                   mod={() => mood(index, false)}
@@ -145,9 +166,14 @@ export default function main({navigation}) {
               );
             }}
           />
-          <Input placeholder="Detalhes" value={item} onChangeText={setItem} />
+          <Input
+            placeholder="Detalhes"
+            value={item}
+            onChangeText={setItem}
+            autoFocus={focus}
+          />
           <Button onPress={add}>
-            <TextButton>ADICIONAR</TextButton>
+            <TextButton>{edit ? 'EDITAR' : 'ADICIONAR'}</TextButton>
           </Button>
         </>
       )}

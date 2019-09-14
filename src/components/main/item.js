@@ -10,7 +10,7 @@ import {
   style,
 } from './styles';
 
-export default function Item({item, remove, mood, mod}) {
+export default function Item({item, remove, mood, mod, editable}) {
   useEffect(() => {
     item;
   }, [item]);
@@ -42,9 +42,10 @@ export default function Item({item, remove, mood, mod}) {
             size={22}
             onPress={mod}
           />
+          <Icon name="edit" color={'#000'} size={22} onPress={editable} />
           <Icon
             name="delete-forever"
-            color={'#028'}
+            color={'#000'}
             size={22}
             onPress={remove}
           />
