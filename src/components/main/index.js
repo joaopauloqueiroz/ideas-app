@@ -50,7 +50,7 @@ export default function main({navigation}) {
    * Functiona add new idea
    */
   async function add() {
-    if (id) {
+    if (edit) {
       let form = field[edit];
       form.text = item;
       await update(form);
@@ -60,6 +60,7 @@ export default function main({navigation}) {
       setField([...field, form]);
       return false;
     }
+
     if (item !== '') {
       let form = {
         text: item,
